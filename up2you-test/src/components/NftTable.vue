@@ -1,8 +1,4 @@
 <template>
-    <div>
-        <input type="text" v-model="search" placeholder="Cerca" />
-    </div>
-
     <table class="table-auto">
         <thead>
             <tr>
@@ -17,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="nft in sortedNfts" :key="nft.id">
+            <tr v-for="nft in paginatedNfts" :key="nft.id">
                 <td><img :src="nft.image" alt="Nft Image" class="w-24 h-24" /></td>
                 <td>{{ nft.internal_id }}</td>
                 <td>{{ nft.details.entity_name }}</td>
@@ -29,7 +25,7 @@
             </tr>
         </tbody>
     </table>
-    <div>
+    <div class="pagination">
         <button @click="prevPage">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -78,7 +74,7 @@ export default {
     },
 
     computed: {
-        sortedNfts: function () {
+        paginatedNfts: function () {
             return this.nftsArray.filter((row, index) => {
                 let start = (this.currentPage - 1) * this.pageSize;
                 let end = this.currentPage * this.pageSize;
